@@ -1,5 +1,5 @@
-.env
-secrets/
-data/
-*.log
-*.tmp
+# .env
+# secrets/
+# data/
+# *.log
+# *.tmp
