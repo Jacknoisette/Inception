@@ -1,9 +1,9 @@
 FROM debian:bullseye
 
-ENV DEBIAND_FONTEND=noninteractive
-
-RUN apt update && apt install -y \
-    wget \
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt-get -y install wget
+RUN apt-get install -y php7.3\
     curl \
     php-fpm \
     php-mysql \
@@ -20,14 +20,18 @@ RUN apt update && apt install -y \
     mariadb-client \
     && apt clean
 
-WORKDIR /var/www/html
+RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
 
-RUN curl -O https://wordpress.org/latest.tar.gz && \
-    tar -xzf latest.tar.gz --strip-components=1 && \
-    rm latest.tar.gz
 
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html
+RUN mkdir -p /var/www/html
+RUN mv /var/www/wordpress-6.0-fr_FR.tar.gz /var/www/html/
+RUN cd /var/www/html && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
 
-COPY tools/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chown -R root:root /var/www/html
+
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+COPY conf/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT /usr/local/bin/entrypoint.sh
