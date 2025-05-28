@@ -27,9 +27,12 @@ RUN mkdir -p /var/www/html
 RUN mv /var/www/wordpress-6.0-fr_FR.tar.gz /var/www/html/
 RUN cd /var/www/html && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
 
-RUN chown -R root:root /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY conf/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

@@ -10,35 +10,22 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -I$(LIBFT_DIR)
-OBJ_DIR = build
-NAME = inception
+DC = docker compose -f srcs/docker-compose.yml
 
-SRCS =	
+.PHONY: all up down clean re logs
 
-OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+all: up
 
-all: $(NAME)
+up:
+	$(DC) up --build -d
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-$(NAME): $(OBJS)
-	@$(MAKE) -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
-
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $<  -g -o $@
+down:
+	$(DC) down
 
 clean:
-	@$(MAKE) -C $(LIBFT_DIR) clean
-	@rm -f $(OBJS)
+	$(DC) down -v --rmi all
 
-fclean: clean
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@rm -f $(NAME)
+re: clean all
 
-re: fclean all
-
-.PHONY: all clean fclean
+logs:
+	$(DC) logs -f
