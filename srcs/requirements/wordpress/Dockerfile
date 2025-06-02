@@ -3,22 +3,12 @@ FROM debian:bullseye
 RUN apt update -y
 RUN apt upgrade -y
 RUN apt-get -y install wget
-RUN apt-get install -y php7.3\
-    curl \
-    php-fpm \
-    php-mysql \
-    php-curl \
-    php-gd \
-    php-mbstring \
-    php-xml \
-    php-xmlrpc \
-    php-soap \
-    php-intl \
-    php-zip \
-    unzip \
-    tar \
-    mariadb-client \
-    && apt clean
+RUN apt-get update && apt-get install php php7.4-fpm php-mysqli php-redis wget -y  && service php7.4-fpm start
+
+RUN apt-get update && apt-get install -y mariadb-client && apt-get clean
+
+
+RUN useradd -m -u 1000 www42
 
 RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
 
