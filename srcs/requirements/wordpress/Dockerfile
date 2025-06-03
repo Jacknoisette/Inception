@@ -1,12 +1,9 @@
 FROM debian:bullseye
 
-RUN apt update -y
-RUN apt upgrade -y
-RUN apt-get -y install wget
-RUN apt-get update && apt-get install php php7.4-fpm php-mysqli php-redis wget -y  && service php7.4-fpm start
-
-RUN apt-get update && apt-get install -y mariadb-client && apt-get clean
-
+RUN apt update -y && \
+    apt upgrade -y && \
+    apt-get -y install wget php php7.4-fpm php-mysqli php-redis mariadb-client && service php7.4-fpm start\
+    && apt-get clean
 
 RUN useradd -m -u 1000 www42
 
