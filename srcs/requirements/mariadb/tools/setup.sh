@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# service mysql start;
-# echo "Starting MariaDB..."
-
 mkdir -p /run/mysqld
 chown mysql:mysql /run/mysqld
 

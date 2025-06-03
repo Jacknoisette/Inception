@@ -47,8 +47,6 @@ services:
     restart: on-failure
     expose:
       - "9000"
-    # ports:
-    #   - "80:80"
 volumes:
   wordpress:
     driver: local
