@@ -1,5 +1,4 @@
-# .env
-# secrets/
-# data/
-# *.log
-# *.tmp
+.env
+**/.env
+secrets/
+**/secrets/
